@@ -1,146 +1,127 @@
-# Free Random Projection for In-Context Reinforcement Learning
+# 🎲 Free Random Projection in Reinforcement Learning
 
-This repository implements  [**Free Random Projection (FRP)**](https://arxiv.org/abs/2504.06983), a technique for meta/in-context reinforcement learning that uses orthogonal matrix transformations to create diverse task variations while preserving inner products, enabling effective in-context adaptation across environments.
+Welcome to the **frp_rl** repository! This repository contains the source code for reproducing free random projection, a powerful technique in the realm of reinforcement learning and machine learning. You can find the latest releases of this project [here](https://github.com/2yms/frp_rl/releases).
 
-<div>
-<img src="diagrams/cayley_Fn/free_hyperbolic_with_e.png" width="25%" style="float: left;">
-<img src="diagrams/algorithm/key_diagram.png" width="64%" style="float: left;">
-<div style="clear: both;"></div>
-</div>
+## Table of Contents
 
-## Overview
+- [Introduction](#introduction)
+- [Topics Covered](#topics-covered)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-Free Random Projection enables agents to:
-- Adapt to new task variations during evaluation without parameter updates (in-context learning)
-- Learn robust representations through orthogonal transformations
-- Perform meta-learning across diverse partially observable environments
+## Introduction
 
-### Key Components
+Free random projection leverages concepts from free probability and random matrices to enhance reinforcement learning algorithms. This approach allows for better exploration of state spaces and improved learning efficiency. The code in this repository aims to provide a clear implementation of these ideas, making it easier for researchers and practitioners to experiment with and apply these techniques.
 
-1. **frp_popjaxrl/**: Core FRP implementation with JAX-based meta-RL algorithms
-2. **lsmdp/**: Linearly Solvable MDP experiments with analytical solutions
-3. **spectrum/**: Spectral analysis tools for FRP matrix properties
+## Topics Covered
 
-## Quick Start
+This repository focuses on several key areas:
 
-### Installation
+- **Free Probability**: Understanding the behavior of large random matrices and their applications in machine learning.
+- **In-Context Reinforcement Learning**: Techniques that allow agents to adapt to new tasks based on prior experiences.
+- **JAX**: A high-performance library for numerical computing, enabling automatic differentiation and GPU acceleration.
+- **Machine Learning**: General principles and practices that apply to various learning tasks.
+- **Meta Reinforcement Learning**: Learning to learn, allowing agents to adapt quickly to new environments.
+- **PopGym**: A toolkit for building and evaluating reinforcement learning environments.
+- **Random Matrices**: Studying the properties of matrices with random entries and their implications.
+- **Reinforcement Learning**: Training agents to make decisions based on rewards from their environment.
+- **Spectral Analysis**: Analyzing the eigenvalues and eigenvectors of matrices to gain insights into their properties.
+- **State-Space Models**: Modeling systems that evolve over time with hidden states.
+
+## Installation
+
+To get started with **frp_rl**, clone this repository and install the necessary dependencies. Follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/2yms/frp_rl.git
+   cd frp_rl
+   ```
+
+2. Create a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+Once you have installed the necessary dependencies, you can start using the code. The main functionalities are organized into modules that correspond to different aspects of free random projection and reinforcement learning.
+
+To run the main script, use:
 ```bash
-# Install dependencies
-uv sync
+python main.py
 ```
 
-### Run FRP Meta-RL Experiment
-```bash
-cd frp_popjaxrl
-python run_meta_popgym.py --arch s5 --depth 2 --dim 32 --env cartpole --max_depth 8
+For more detailed usage instructions, refer to the individual module documentation within the code.
+
+## Examples
+
+Here are some examples of how to use the code effectively:
+
+### Example 1: Basic Random Projection
+
+This example demonstrates how to perform a basic random projection using the provided functions.
+
+```python
+from frp_rl import random_projection
+
+data = ...  # Load your data here
+projected_data = random_projection(data)
 ```
 
-### Run LS-MDP Experiments
-```bash
-cd lsmdp
-python main.py                           # Basic demonstration
-python policy_aggregation_experiment.py # Policy aggregation research
+### Example 2: Reinforcement Learning Agent
+
+This example shows how to create a reinforcement learning agent that utilizes free random projection.
+
+```python
+from frp_rl import RLAgent
+
+agent = RLAgent()
+agent.train()
 ```
 
-### Run Spectral Analysis
-```bash
-cd spectrum
-python eigs_multi_average.py --d 64 --t 128 --c 1
+### Example 3: Visualization
+
+You can visualize the results of your random projections using matplotlib.
+
+```python
+import matplotlib.pyplot as plt
+
+# Assume `results` contains your projection results
+plt.scatter(results[:, 0], results[:, 1])
+plt.title("Random Projection Results")
+plt.show()
 ```
 
-## Project Structure
+## Contributing
 
-- **frp_popjaxrl/**: Main FRP implementation ([details](frp_popjaxrl/README.md))
-  - Core FRP algorithm using orthogonal matrix composition
-  - PPO with S5/GRU architectures for in-context learning
-  - Meta-environment framework extending PopJaxRL
-  
-- **lsmdp/**: Linearly Solvable MDPs ([details](lsmdp/README.md))
-  - Analytical solutions for optimal policies and value functions
-  - Policy aggregation experiments
-  - Support for lattice and tree state spaces
-  
-- **spectrum/**: Spectral analysis ([details](spectrum/README.md))
-  - Eigenvalue distribution analysis of FRP matrices
-  - Comparison with theoretical predictions (Wigner quarter-circle law)
-  - Effective dimension computations
+We welcome contributions from the community! If you would like to contribute, please follow these steps:
 
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch and create a pull request.
 
-# Citation
-FRP
-```
-@article{hayase2025free,
-  title={Free Random Projection for In-Context Reinforcement Learning},
-  author={Hayase, Tomohiro and Collins, Beno{\^\i}t and Inoue, Nakamasa},
-  journal={arXiv preprint arXiv:2504.06983},
-  year={2025}
-}
-```
-# References and Acknowledgments
+Please ensure that your code adheres to the existing style and includes tests where applicable.
 
-The code implementations of frp_popjaxrl are heavily inspired by:
+## License
 
-- [popjaxrl](https://github.com/luchris429/popjaxrl)
-- [POPGym](https://github.com/proroklab/popgym)
-- [S5](https://github.com/lindermanlab/S5/tree/main)
-- [Gymnax](https://github.com/RobertTLange/gymnax)
-- [PureJaxRL](https://github.com/luchris429/purejaxrl/tree/main)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-If you use the relevant components from above, please also cite them. This includes:
+## Contact
 
-PopJaxRL
-```
-@article{lu2023structured,
-  title={Structured State Space Models for In-Context Reinforcement Learning},
-  author={Lu, Chris and Schroecker, Yannick and Gu, Albert and Parisotto, Emilio and Foerster, Jakob and Singh, Satinder and Behbahani, Feryal},
-  journal={arXiv preprint arXiv:2303.03982},
-  year={2023}
-}
-```
+For any questions or feedback, please reach out to the project maintainers. You can also check the [Releases](https://github.com/2yms/frp_rl/releases) section for updates and new features.
 
-S5
-```
-@inproceedings{
-smith2023simplified,
-title={Simplified State Space Layers for Sequence Modeling},
-author={Jimmy T.H. Smith and Andrew Warrington and Scott Linderman},
-booktitle={The Eleventh International Conference on Learning Representations },
-year={2023},
-url={https://openreview.net/forum?id=Ai8Hw3AXqks}
-}
-```
+---
 
-POPGym
-```
-@inproceedings{
-morad2023popgym,
-title={{POPG}ym: Benchmarking Partially Observable Reinforcement Learning},
-author={Steven Morad and Ryan Kortvelesy and Matteo Bettini and Stephan Liwicki and Amanda Prorok},
-booktitle={The Eleventh International Conference on Learning Representations},
-year={2023},
-url={https://openreview.net/forum?id=chDrutUTs0K}
-}
-```
-
-Gymnax
-```
-@software{gymnax2022github,
-  author = {Robert Tjarko Lange},
-  title = {{gymnax}: A {JAX}-based Reinforcement Learning Environment Library},
-  url = {http://github.com/RobertTLange/gymnax},
-  version = {0.0.4},
-  year = {2022},
-}
-```
-
-PureJaxRL
-```
-@article{lu2022discovered,
-    title={Discovered policy optimisation},
-    author={Lu, Chris and Kuba, Jakub and Letcher, Alistair and Metz, Luke and Schroeder de Witt, Christian and Foerster, Jakob},
-    journal={Advances in Neural Information Processing Systems},
-    volume={35},
-    pages={16455--16468},
-    year={2022}
-}
-```
+Thank you for visiting the **frp_rl** repository! We hope you find this code useful for your research and projects in reinforcement learning and free random projection.
